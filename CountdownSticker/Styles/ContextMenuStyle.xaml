@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pu="https://opensource.panuon.com/wpf-ui">
+    <Style BasedOn="{StaticResource {x:Static pu:StyleKeys.ContextMenuStyle}}" TargetType="ContextMenu">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource StandardForegroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource StandardBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="pu:ContextMenuHelper.CornerRadius" Value="0" />
+        <Setter Property="pu:ContextMenuHelper.ItemsCornerRadius" Value="0" />
+        <Setter Property="pu:ContextMenuHelper.ItemsHoverCornerRadius" Value="0" />
+        <Setter Property="pu:ContextMenuHelper.ItemsHoverBackground" Value="{DynamicResource HoverBackgroundBrush}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+</ResourceDictionary>

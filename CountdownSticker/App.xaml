@@ -1,0 +1,43 @@
+﻿<Application
+    x:Class="CountdownSticker.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pu="https://opensource.panuon.com/wpf-ui">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  字体资源  -->
+                <ResourceDictionary>
+                    <FontFamily x:Key="LightFontFamily">pack://application:,,,/Resources/Fonts/#MiSans Light</FontFamily>
+                    <FontFamily x:Key="RegularFontFamily">pack://application:,,,/Resources/Fonts/#MiSans Regular</FontFamily>
+                    <FontFamily x:Key="IconFontFamily">pack://application:,,,/Resources/Fonts/#Font Awesome 6 Free Solid</FontFamily>
+                </ResourceDictionary>
+
+                <!--  Panuon 默认控件样式  -->
+                <pu:StyleDictionary Includes="All" />
+
+                <!--  自定义控件样式  -->
+                <ResourceDictionary Source="/CountdownSticker;component/Styles/LabelStyle.xaml" />
+                <ResourceDictionary Source="/CountdownSticker;component/Styles/ButtonStyle.xaml" />
+                <ResourceDictionary Source="/CountdownSticker;component/Styles/ContextMenuStyle.xaml" />
+                <ResourceDictionary Source="/CountdownSticker;component/Styles/WindowXStyle.xaml" />
+                <ResourceDictionary Source="/CountdownSticker;component/Styles/TextBoxStyle.xaml" />
+
+                <!--  Panuon 全局设置通用辅助类  -->
+                <ResourceDictionary>
+                    <pu:GlobalSettings
+                        x:Key="GobalSettings"
+                        FontFamily="{StaticResource RegularFontFamily}"
+                        FontSize="14"
+                        IconFontFamily="{StaticResource IconFontFamily}">
+                        <pu:GlobalSettings.Themes>
+                            <pu:ApplicationTheme Key="Light" ResourceDictionary="/CountdownSticker;component/Themes/Light.xaml" />
+                            <pu:ApplicationTheme Key="Dark" ResourceDictionary="/CountdownSticker;component/Themes/Dark.xaml" />
+                        </pu:GlobalSettings.Themes>
+                    </pu:GlobalSettings>
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

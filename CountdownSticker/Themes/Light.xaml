@@ -1,0 +1,93 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="AccentColor">#FF005FB8</Color>
+    <Color x:Key="AccentMouseOverColor">#E6005FB8</Color>
+    <Color x:Key="AccentPressedColor">#CC005FB8</Color>
+    <Color x:Key="AccentSelectedColor">#FF0078D4</Color>
+    <Color x:Key="AccentControlBorderGradientStop1Color">#14FFFFFF</Color>
+    <Color x:Key="AccentControlBorderGradientStop2Color">#66000000</Color>
+    <Color x:Key="AccentControlForegroundColor">#FFFFFFFF</Color>
+    <Color x:Key="AlternativeColor">#FFF3F3F3</Color>
+    <Color x:Key="ButtonBorderGradientStop1Color">#0E000000</Color>
+    <Color x:Key="ButtonBorderGradientStop2Color">#29000000</Color>
+    <Color x:Key="DisabledBackgroundColor">#4DF9F9F9</Color>
+    <Color x:Key="DisabledBorderColor">#0F000000</Color>
+    <Color x:Key="DisabledForegroundColor">#FF000000</Color>
+    <Color x:Key="FocusColor">#E4000000</Color>
+    <Color x:Key="FocusInnerColor">#B3FFFFFF</Color>
+    <Color x:Key="IconColor">#E4000000</Color>
+    <Color x:Key="IconSecondaryColor">#9B000000</Color>
+    <Color x:Key="InputBorderGradientStop1Color">#0F000000</Color>
+    <Color x:Key="InputBorderGradientStop2Color">#72000000</Color>
+    <Color x:Key="MouseOverBackgroundColor">#B3F9F9F9</Color>
+    <Color x:Key="MouseOverBorderGradientStop1Color">#0F000000</Color>
+    <Color x:Key="MouseOverBorderGradientStop2Color">#71000000</Color>
+    <Color x:Key="OverlayColor">#FFFBFBFB</Color>
+    <Color x:Key="PressedBackgroundColor">#4DF9F9F9</Color>
+    <Color x:Key="PrimaryBackgroundColor">#B3FFFFFF</Color>
+    <Color x:Key="PrimaryBorderColor">#0F000000</Color>
+    <Color x:Key="PrimaryForegroundColor">#E4000000</Color>
+    <Color x:Key="PrimarySolidBackgroundColor">#FFFFFFFF</Color>
+    <Color x:Key="PrimarySolidBorderColor">#FFECECEC</Color>
+    <Color x:Key="ReadOnlyBackgroundColor">#E6F6F6F6</Color>
+    <Color x:Key="ReadOnlyBorderColor">#FFEBEBEB</Color>
+    <Color x:Key="SecondaryBackgroundColor">#FFEEEEEE</Color>
+    <Color x:Key="SecondaryBorderColor">#29000000</Color>
+    <Color x:Key="SecondaryForegroundColor">#9B000000</Color>
+    <Color x:Key="SelectedColor">#0A000000</Color>
+    <Color x:Key="SelectedMouseOverColor">#06000000</Color>
+    <Color x:Key="SelectedUnfocusedColor">#FFD9D9D9</Color>
+    <Color x:Key="StrokeColor">#FFC4C4C4</Color>
+    <Color x:Key="SubtleColor">#0A000000</Color>
+    <Color x:Key="SubtleSecondaryColor">#06000000</Color>
+    <Color x:Key="TertiaryBackgroundColor">#FFF9F9F9</Color>
+    <Color x:Key="TertiaryBorderColor">#FFEBEBEB</Color>
+    <Color x:Key="TertiaryForegroundColor">#72000000</Color>
+    <Color x:Key="TertiarySmokeBackgroundColor">#4D000000</Color>
+    <Color x:Key="ValidationColor">#FFC42B1C</Color>
+
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentMouseOverBrush" Color="{StaticResource AccentMouseOverColor}" />
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="{StaticResource AccentPressedColor}" />
+    <SolidColorBrush x:Key="AccentSelectedBrush" Color="{StaticResource AccentSelectedColor}" />
+    <SolidColorBrush x:Key="AccentControlBorderGradientStop1Brush" Color="{StaticResource AccentControlBorderGradientStop1Color}" />
+    <SolidColorBrush x:Key="AccentControlBorderGradientStop2Brush" Color="{StaticResource AccentControlBorderGradientStop2Color}" />
+    <SolidColorBrush x:Key="AccentControlForegroundBrush" Color="{StaticResource AccentControlForegroundColor}" />
+    <SolidColorBrush x:Key="AlternativeBrush" Color="{StaticResource AlternativeColor}" />
+    <SolidColorBrush x:Key="ButtonBorderGradientStop1Brush" Color="{StaticResource ButtonBorderGradientStop1Color}" />
+    <SolidColorBrush x:Key="ButtonBorderGradientStop2Brush" Color="{StaticResource ButtonBorderGradientStop2Color}" />
+    <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="{StaticResource DisabledBackgroundColor}" />
+    <SolidColorBrush x:Key="DisabledBorderBrush" Color="{StaticResource DisabledBorderColor}" />
+    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="{StaticResource DisabledForegroundColor}" />
+    <SolidColorBrush x:Key="FocusBrush" Color="{StaticResource FocusColor}" />
+    <SolidColorBrush x:Key="FocusInnerBrush" Color="{StaticResource FocusInnerColor}" />
+    <SolidColorBrush x:Key="IconBrush" Color="{StaticResource IconColor}" />
+    <SolidColorBrush x:Key="IconSecondaryBrush" Color="{StaticResource IconSecondaryColor}" />
+    <SolidColorBrush x:Key="InputBorderGradientStop1Brush" Color="{StaticResource InputBorderGradientStop1Color}" />
+    <SolidColorBrush x:Key="InputBorderGradientStop2Brush" Color="{StaticResource InputBorderGradientStop2Color}" />
+    <SolidColorBrush x:Key="MouseOverBackgroundBrush" Color="{StaticResource MouseOverBackgroundColor}" />
+    <SolidColorBrush x:Key="MouseOverBorderGradientStop1Brush" Color="{StaticResource MouseOverBorderGradientStop1Color}" />
+    <SolidColorBrush x:Key="MouseOverBorderGradientStop2Brush" Color="{StaticResource MouseOverBorderGradientStop2Color}" />
+    <SolidColorBrush x:Key="OverlayBrush" Color="{StaticResource OverlayColor}" />
+    <SolidColorBrush x:Key="PressedBackgroundBrush" Color="{StaticResource PressedBackgroundColor}" />
+    <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="{StaticResource PrimaryBackgroundColor}" />
+    <SolidColorBrush x:Key="PrimaryBorderBrush" Color="{StaticResource PrimaryBorderColor}" />
+    <SolidColorBrush x:Key="PrimaryForegroundBrush" Color="{StaticResource PrimaryForegroundColor}" />
+    <SolidColorBrush x:Key="PrimarySolidBackgroundBrush" Color="{StaticResource PrimarySolidBackgroundColor}" />
+    <SolidColorBrush x:Key="PrimarySolidBorderBrush" Color="{StaticResource PrimarySolidBorderColor}" />
+    <SolidColorBrush x:Key="ReadOnlyBackgroundBrush" Color="{StaticResource ReadOnlyBackgroundColor}" />
+    <SolidColorBrush x:Key="ReadOnlyBorderBrush" Color="{StaticResource ReadOnlyBorderColor}" />
+    <SolidColorBrush x:Key="SecondaryBackgroundBrush" Color="{StaticResource SecondaryBackgroundColor}" />
+    <SolidColorBrush x:Key="SecondaryBorderBrush" Color="{StaticResource SecondaryBorderColor}" />
+    <SolidColorBrush x:Key="SecondaryForegroundBrush" Color="{StaticResource SecondaryForegroundColor}" />
+    <SolidColorBrush x:Key="SelectedBrush" Color="{StaticResource SelectedColor}" />
+    <SolidColorBrush x:Key="SelectedMouseOverBrush" Color="{StaticResource SelectedMouseOverColor}" />
+    <SolidColorBrush x:Key="SelectedUnfocusedBrush" Color="{StaticResource SelectedUnfocusedColor}" />
+    <SolidColorBrush x:Key="StrokeBrush" Color="{StaticResource StrokeColor}" />
+    <SolidColorBrush x:Key="SubtleBrush" Color="{StaticResource SubtleColor}" />
+    <SolidColorBrush x:Key="SubtleSecondaryBrush" Color="{StaticResource SubtleSecondaryColor}" />
+    <SolidColorBrush x:Key="TertiaryBackgroundBrush" Color="{StaticResource TertiaryBackgroundColor}" />
+    <SolidColorBrush x:Key="TertiaryBorderBrush" Color="{StaticResource TertiaryBorderColor}" />
+    <SolidColorBrush x:Key="TertiaryForegroundBrush" Color="{StaticResource TertiaryForegroundColor}" />
+    <SolidColorBrush x:Key="TertiarySmokeBackgroundBrush" Color="{StaticResource TertiarySmokeBackgroundColor}" />
+    <SolidColorBrush x:Key="ValidationBrush" Color="{StaticResource ValidationColor}" />
+</ResourceDictionary>

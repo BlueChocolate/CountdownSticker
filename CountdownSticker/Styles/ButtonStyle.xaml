@@ -1,0 +1,49 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pu="https://opensource.panuon.com/wpf-ui">
+    <Style
+        x:Key="StandardButtonStyle"
+        BasedOn="{StaticResource {x:Static pu:StyleKeys.ButtonStyle}}"
+        TargetType="Button">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryForegroundBrush}" />
+        <!--<Setter Property="pu:ButtonHelper.HoverForeground" Value="{DynamicResource PrimaryForegroundBrush}" />-->
+        <!--<Setter Property="pu:ButtonHelper.ClickForeground" Value="{DynamicResource PrimaryForegroundBrush}" />-->
+
+        <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
+        <Setter Property="pu:ButtonHelper.HoverBackground" Value="{DynamicResource MouseOverBackgroundBrush}" />
+        <Setter Property="pu:ButtonHelper.ClickBackground" Value="{DynamicResource PressedBackgroundBrush}" />
+
+        <Setter Property="BorderBrush" Value="{DynamicResource SecondaryBorderBrush}" />
+        <Setter Property="pu:ButtonHelper.HoverBorderBrush" Value="{DynamicResource SecondaryBorderBrush}" />
+        <Setter Property="pu:ButtonHelper.ClickBorderBrush" Value="{DynamicResource AccentBrush}" />
+
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="pu:ButtonHelper.HoverBorderThickness" Value="0" />
+        <Setter Property="pu:ButtonHelper.ClickBorderThickness" Value="0" />
+        <Setter Property="pu:ButtonHelper.CornerRadius" Value="5" />
+        <Setter Property="pu:ButtonHelper.HoverCornerRadius" Value="5" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <Style
+        x:Key="IconButtonStyle"
+        BasedOn="{StaticResource StandardButtonStyle}"
+        TargetType="Button">
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryForegroundBrush}" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="pu:ButtonHelper.HoverBackground" Value="{DynamicResource MouseOverBackgroundBrush}" />
+        <Setter Property="pu:ButtonHelper.ClickForeground" Value="{DynamicResource PrimaryForegroundBrush}" />
+        <Setter Property="pu:ButtonHelper.CornerRadius" Value="5" />
+        <Setter Property="pu:ButtonHelper.HoverCornerRadius" Value="5" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+</ResourceDictionary>
