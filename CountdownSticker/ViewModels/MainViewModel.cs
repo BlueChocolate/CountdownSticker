@@ -42,10 +42,10 @@ namespace CountdownSticker.ViewModels
                     //Debug.WriteLine("NotifyCollectionChangedAction.Add");
                     if (e.NewItems != null)
                     {
-                        foreach (var item in e.NewItems.OfType<Countdown>())
+                        foreach (var countdown in e.NewItems.OfType<Countdown>())
                         {
-                            _countdownService.AddCountdown(item);
-                            _windowService.AddCountdown(item);
+                            _countdownService.AddCountdown(countdown);
+                            _windowService.AddCountdown(countdown);
                         }
                     }
                     break;
@@ -53,10 +53,10 @@ namespace CountdownSticker.ViewModels
                     //Debug.WriteLine("NotifyCollectionChangedAction.Remove");
                     if (e.OldItems != null)
                     {
-                        foreach (var item in e.OldItems.OfType<Countdown>())
+                        foreach (var countdown in e.OldItems.OfType<Countdown>())
                         {
-                            _countdownService.RemoveCountdown(item);
-                            _windowService.RemoveCountdown((item).Id);
+                            _countdownService.RemoveCountdown(countdown);
+                            _windowService.RemoveCountdown((countdown).Id);
                         }
                     }
                     break;
@@ -64,10 +64,10 @@ namespace CountdownSticker.ViewModels
                     //Debug.WriteLine("NotifyCollectionChangedAction.Replace");
                     if (e.OldItems != null && e.NewItems != null)
                     {
-                        foreach (var item in e.NewItems.OfType<Countdown>())
+                        foreach (var countdown in e.NewItems.OfType<Countdown>())
                         {
-                            _countdownService.UpdateCountdown(item);
-                            _windowService.UpdateCountdown((item));
+                            _countdownService.UpdateCountdown(countdown);
+                            _windowService.UpdateCountdown((countdown));
                         }
                     }
                     break;
@@ -92,15 +92,22 @@ namespace CountdownSticker.ViewModels
         [RelayCommand]
         public void SaveCountdown(Countdown countdown)
         {
-            countdown.LastModified = DateTime.Now;
-            for (int i = 0; i < Countdowns.Count; i++)
+            var oldCountdown = Countdowns.FirstOrDefault(c => c.Id == countdown.Id);
+            if (oldCountdown != null)
             {
-                if (Countdowns[i].Id == countdown.Id)
-                {
-                    Countdowns[i] = countdown;
-                    break;
-                }
+                countdown.LastModified = DateTime.Now;
+                Countdowns.Remove(oldCountdown);
+                Countdowns.Add(countdown);
             }
+
+            //for (int i = 0; i < Countdowns.Count; i++)
+            //{
+            //    if (Countdowns[i].Id == countdown.Id)
+            //    {
+            //        Countdowns[i] = countdown;
+            //        break;
+            //    }
+            //}
             //Countdowns = new ObservableCollection<Countdown>(Countdowns.OrderBy(c => c.LastModified).ToList());
             //Countdowns.CollectionChanged += CountdownsCollectionChanged;
         }

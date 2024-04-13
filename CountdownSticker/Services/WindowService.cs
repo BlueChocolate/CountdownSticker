@@ -76,9 +76,9 @@ namespace CountdownSticker.Services
             };
             stickerWindows.SizeChanged += (sender, e) =>
             {
-                AlignAndShow();
+                AlignAndRefresh();
             };
-            AlignAndShow();
+            AlignAndRefresh();
         }
 
         public void UpdateCountdown(Countdown countdown)
@@ -86,7 +86,7 @@ namespace CountdownSticker.Services
             if (_stickerWindows.TryGetValue(countdown.Id, out StickerWindowX? value))
             {
                 value.DataContext = new StickerViewModel(countdown.Id, countdown.Title, countdown.Note, countdown.EndTime, countdown.Remaining, countdown.IsActive, countdown.IsVisible);
-                AlignAndShow();
+                AlignAndRefresh();
             }
         }
 
@@ -95,7 +95,7 @@ namespace CountdownSticker.Services
             if (_stickerWindows.TryGetValue(stickerViewModel.Id, out StickerWindowX? value))
             {
                 //value.DataContext = stickerViewModel; // 好像没必要
-                AlignAndShow();
+                AlignAndRefresh();
             }
         }
 
@@ -105,11 +105,19 @@ namespace CountdownSticker.Services
             {
                 value.Close();
                 _stickerWindows.Remove(id);
-                AlignAndShow();
+                AlignAndRefresh();
+
+                // 暂时这样，用于支持从便笺窗口删除倒计时
+                var mainViewModel = (MainViewModel)_mainWindow.DataContext;
+                var removeCountdown = mainViewModel.Countdowns.FirstOrDefault(c => c.Id == id);
+                if (removeCountdown != null)
+                {
+                    mainViewModel.Countdowns.Remove(removeCountdown);
+                }
             }
         }
 
-        public void AlignAndShow()
+        public void AlignAndRefresh()
         {
             var screenWidth = (int)SystemParameters.PrimaryScreenWidth;
             var screenHeight = (int)SystemParameters.PrimaryScreenHeight;
@@ -169,7 +177,7 @@ namespace CountdownSticker.Services
                         }
                     }
                 }
-                await Task.Delay(1);
+                await Task.Delay(1000);
             }
         }
     }

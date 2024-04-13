@@ -139,6 +139,13 @@
                         </StackPanel>
 
                         <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <!--<pu:ColorPicker
+                                Width="30"
+                                Height="30"
+                                Margin="5"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Cursor="Hand" />-->
                             <CheckBox
                                 Width="55"
                                 Height="30"
@@ -151,14 +158,12 @@
                                 Cursor="Hand"
                                 Foreground="{DynamicResource PrimaryForegroundBrush}"
                                 IsChecked="{Binding IsVisible}" />
-
                             <Button
                                 Margin="5"
                                 Command="{Binding DataContext.SaveCountdownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 CommandParameter="{Binding}"
                                 Content="&#xf0c7;"
                                 Style="{DynamicResource IconButtonStyle}" />
-
                             <Button
                                 Margin="5"
                                 pu:ButtonHelper.ClickForeground="{DynamicResource ValidationBrush}"

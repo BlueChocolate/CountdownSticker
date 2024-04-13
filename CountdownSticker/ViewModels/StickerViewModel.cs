@@ -36,15 +36,15 @@ namespace CountdownSticker.ViewModels
         void HideCountdown()
         {
             IsVisible = false;
-            _windowService.UpdateCountdown(this);
-            _countdownService.UpdateCountdown(id: Id, isVisible: false);
+            _countdownService.UpdateCountdown(id: Id, isVisible: false); // 顺序不能搞反
+            _windowService.UpdateCountdown(this); // 顺序不能搞反
         }
 
         [RelayCommand]
         void RemoveCountdown()
         {
-            _windowService.RemoveCountdown(Id);
             _countdownService.RemoveCountdown(Id);
+            _windowService.RemoveCountdown(Id);
         }
 
         [RelayCommand]
