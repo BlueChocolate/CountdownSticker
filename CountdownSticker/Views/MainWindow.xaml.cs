@@ -2,9 +2,9 @@
 
 namespace CountdownSticker.Views
 {
-    public partial class MainWindow : WindowX
+    public partial class MainWindowX : WindowX
     {
-        public MainWindow()
+        public MainWindowX()
         {
             InitializeComponent();
         }

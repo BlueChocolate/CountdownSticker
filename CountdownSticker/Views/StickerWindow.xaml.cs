@@ -5,9 +5,9 @@ namespace CountdownSticker.Views
     /// <summary>
     /// StickerWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class StickerWindow : WindowX
+    public partial class StickerWindowX : WindowX
     {
-        public StickerWindow()
+        public StickerWindowX()
         {
             InitializeComponent();
         }

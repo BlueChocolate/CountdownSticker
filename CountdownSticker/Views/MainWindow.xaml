@@ -1,5 +1,5 @@
 ﻿<pu:WindowX
-    x:Class="CountdownSticker.Views.MainWindow"
+    x:Class="CountdownSticker.Views.MainWindowX"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,7 @@
     xmlns:viewmodels="clr-namespace:CountdownSticker.ViewModels"
     xmlns:views="clr-namespace:CountdownSticker.Views"
     Title=" 倒计时便笺"
-    Width="350"
+    Width="400"
     Height="500"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     pu:WindowXCaption.BorderBrush="#3E3E3E"
@@ -119,31 +119,51 @@
                                 Background="{DynamicResource TertiarySmokeBackgroundBrush}"
                                 BorderThickness="0,0,0,2"
                                 CornerRadius="5"
+                                Cursor="Hand"
                                 FocusedBorderBrush="{DynamicResource AccentBrush}"
                                 Foreground="{DynamicResource TertiaryForegroundBrush}"
                                 HoverBackground="{DynamicResource MouseOverBackgroundBrush}"
                                 HoverBorderBrush="{DynamicResource AccentBrush}"
+                                ItemsCheckedBackground="{DynamicResource PressedBackgroundBrush}"
+                                ItemsHoverBackground="{DynamicResource MouseOverBackgroundBrush}"
                                 Mode="DateTime"
                                 SelectedDateTime="{Binding EndTime}" />
-                            <CheckBox
-                                Width="Auto"
-                                Height="30"
-                                Margin="5"
-                                Content="展示"
-                                Foreground="{DynamicResource PrimaryForegroundBrush}"
-                                IsChecked="{Binding IsVisible}" />
                         </StackPanel>
 
-                        <Button
-                            Grid.Column="2"
-                            Width="50"
-                            Height="30"
-                            Margin="5"
-                            Command="{Binding DataContext.RemoveStickerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                            CommandParameter="{Binding}"
-                            Content="删除"
-                            Foreground="{DynamicResource ValidationBrush}"
-                            Style="{DynamicResource StandardButtonStyle}" />
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <CheckBox
+                                Width="55"
+                                Height="30"
+                                Margin="5"
+                                pu:CheckBoxHelper.CheckedBackground="{DynamicResource PressedBackgroundBrush}"
+                                pu:CheckBoxHelper.CornerRadius="5"
+                                pu:CheckBoxHelper.HoverBackground="{DynamicResource MouseOverBackgroundBrush}"
+                                Content="展示"
+                                Cursor="Hand"
+                                Foreground="{DynamicResource PrimaryForegroundBrush}"
+                                IsChecked="{Binding IsVisible}" />
+
+                            <Button
+                                Width="55"
+                                Height="30"
+                                Margin="5"
+                                Command="{Binding DataContext.SaveCountdownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                CommandParameter="{Binding}"
+                                Content="保存"
+                                Style="{DynamicResource StandardButtonStyle}" />
+
+                            <Button
+                                Width="55"
+                                Height="30"
+                                Margin="5"
+                                Command="{Binding DataContext.RemoveCountdownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                CommandParameter="{Binding}"
+                                Content="删除"
+                                Foreground="{DynamicResource ValidationBrush}"
+                                Style="{DynamicResource StandardButtonStyle}" />
+                        </StackPanel>
+
+
                     </Grid>
                 </StackPanel>
             </Border>
@@ -156,7 +176,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <ScrollViewer
             Grid.Row="1"
             pu:ScrollBarHelper.ThumbCornerRadius="5"
@@ -176,7 +196,7 @@
                         Margin="5"
                         pu:ButtonHelper.Icon="&#xf0fe;"
                         pu:IconHelper.FontSize="20"
-                        Command="{Binding AddStickerCommand}"
+                        Command="{Binding AddCountdownCommand}"
                         Content="添加倒计时"
                         FontSize="18"
                         Style="{DynamicResource StandardButtonStyle}" />
@@ -185,7 +205,7 @@
                 <ItemsControl
                     Margin="5"
                     ItemTemplate="{StaticResource StickerTemplate}"
-                    ItemsSource="{Binding Stickers}" />
+                    ItemsSource="{Binding Countdowns}" />
             </StackPanel>
 
         </ScrollViewer>

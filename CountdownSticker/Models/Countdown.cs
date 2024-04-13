@@ -6,9 +6,10 @@ namespace CountdownSticker.Models
     {
         private Guid _id;
         private string _title;
-        private DateTime _endTime;
-        private bool _isVisible;
         private string? _note;
+        private DateTime _endTime;
+        private DateTime _lastModified;
+        private bool _isVisible;
 
         public Guid Id
         {
@@ -22,10 +23,22 @@ namespace CountdownSticker.Models
             set { _title = value; }
         }
 
+        public string? Note
+        {
+            get { return _note; }
+            set { _note = value; }
+        }
+
         public DateTime EndTime
         {
             get { return _endTime; }
             set { _endTime = value; }
+        }
+
+        public DateTime LastModified
+        {
+            get { return _lastModified; }
+            set { _lastModified = value; }
         }
 
         [JsonIgnore]
@@ -46,19 +59,14 @@ namespace CountdownSticker.Models
             set { _isVisible = value; }
         }
 
-        public string? Note
-        {
-            get { return _note; }
-            set { _note = value; }
-        }
-
         public Countdown()
         {
             _id = Guid.NewGuid();
             _title = "新的倒计时";
             _note = string.Empty;
             _isVisible = true;
-            _endTime = DateTime.Now + TimeSpan.FromDays(1);
+            _endTime = DateTime.Today.AddDays(1).AddHours(9);
+            _lastModified = DateTime.Now;
         }
     }
 }
