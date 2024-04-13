@@ -19,6 +19,16 @@ namespace CountdownSticker
         {
             base.OnStartup(e);
 
+            // 只允许运行一个实例
+            string currentProcessName = Process.GetCurrentProcess().ProcessName;
+            Process[] processes = Process.GetProcessesByName(currentProcessName);
+            if (processes.Length > 1)
+            {
+                Console.WriteLine("只能运行一个实例");
+                Environment.Exit(1);
+            }
+
+            // 注册服务
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddSingleton<IFileService, FileService>();
             serviceCollection.AddSingleton<ISettingService, SettingService>();
@@ -27,15 +37,11 @@ namespace CountdownSticker
             Services = serviceCollection.BuildServiceProvider();
 
             var windowService = Services.GetRequiredService<IWindowService>();
-            windowService.Initialization();
-            windowService.ShowMainWindow();
-
-            var settingService = Services.GetRequiredService<ISettingService>();
-            settingService.SetSetting("CountdownStickersFilePath", "C:\\Users\\RadioNoise\\OneDrive\\便笺\\CountdownStickers.json");
-            settingService.SetSetting("Theme", "Dark");
+            var countdownService = Services.GetRequiredService<ICountdownService>();
+            windowService.SetCountdowns(countdownService.GetCountdowns());
+            //windowService.ShowMainWindow();
 
             GlobalSettings.ChangeTheme("Dark");
-            Debug.WriteLine("App 初始化完成");
         }
     }
 }

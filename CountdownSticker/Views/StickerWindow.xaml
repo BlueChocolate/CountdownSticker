@@ -20,6 +20,7 @@
     Foreground="{DynamicResource PrimaryForegroundBrush}"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
+    SizeToContent="Height"
     Topmost="True"
     mc:Ignorable="d">
     <pu:WindowX.Effect>
@@ -31,9 +32,25 @@
                 Command="{Binding ShowMainWindowCommand}"
                 Header="显示倒计时列表"
                 Icon="&#xf03a;" />
-            <MenuItem Header="隐藏此倒计时" Icon="&#xf070;" />
-            <MenuItem Header="删除此倒计时" Icon="&#xf1f8;" />
+            <MenuItem
+                Command="{Binding HideCountdownCommand}"
+                Header="隐藏此倒计时"
+                Icon="&#xf070;" />
+            <MenuItem
+                Command="{Binding RemoveCountdownCommand}"
+                Header="删除此倒计时"
+                Icon="&#xf1f8;" />
+            <MenuItem
+                Height="1"
+                BorderBrush="#3E3E3E"
+                BorderThickness="1"
+                IsEnabled="False" />
             <MenuItem Header="窗口置顶" Icon="&#xf30c;" />
+            <MenuItem Header="对齐便笺" Icon="&#xf5cb;" />
+            <MenuItem
+                Command="{Binding ExitCommand}"
+                Header="退出程序"
+                Icon="&#xf011;" />
         </ContextMenu>
     </pu:WindowX.ContextMenu>
     <Grid
@@ -45,11 +62,11 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Label Content="距离" Style="{DynamicResource MediumLabelStyle}" />
-            <Label Content="{Binding Title}" Style="{DynamicResource MediumLabelStyle}" />
-            <Label Content="还有" Style="{DynamicResource MediumLabelStyle}" />
-        </StackPanel>
+        <TextBlock
+            Grid.Row="0"
+            FontSize="20"
+            Text="{Binding Title, StringFormat=距离{0}还有}"
+            TextWrapping="Wrap" />
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Label

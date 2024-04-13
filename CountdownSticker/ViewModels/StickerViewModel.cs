@@ -40,11 +40,23 @@ namespace CountdownSticker.ViewModels
             _countdownService.UpdateCountdown(id: Id, isVisible: false);
         }
 
+        [RelayCommand]
+        void RemoveCountdown()
+        {
+            _windowService.RemoveCountdown(Id);
+            _countdownService.RemoveCountdown(Id);
+        }
 
         [RelayCommand]
         public void ShowMainWindow()
         {
             _windowService.ShowMainWindow();
+        }
+
+        [RelayCommand]
+        public void Exit()
+        {
+            Environment.Exit(0);
         }
 
         public StickerViewModel(Guid id, string title, string? note, DateTime endTime, TimeSpan remaining, bool isActive, bool isVisible)

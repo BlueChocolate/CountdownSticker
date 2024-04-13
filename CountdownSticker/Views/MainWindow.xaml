@@ -55,13 +55,21 @@
             <MenuItem Command="{Binding ExitCommand}" Header="退出" />
         </ContextMenu>
 
+        <!--  倒计时卡片  -->
         <DataTemplate x:Key="StickerTemplate" DataType="{x:Type models:Countdown}">
             <Border
                 Margin="5,5,5,10"
+                pu:ToolTipHelper.Background="{DynamicResource TertiaryBackgroundBrush}"
+                pu:ToolTipHelper.BorderBrush="{DynamicResource FocusInnerBrush}"
+                pu:ToolTipHelper.BorderThickness="0"
+                pu:ToolTipHelper.CornerRadius="5"
+                pu:ToolTipHelper.Foreground="{DynamicResource TertiaryForegroundBrush}"
+                pu:ToolTipHelper.ShadowColor="{DynamicResource OverlayColor}"
                 Background="{DynamicResource PrimaryBackgroundBrush}"
                 BorderBrush="{DynamicResource AccentBrush}"
                 BorderThickness="0,3,0,0"
-                CornerRadius="5">
+                CornerRadius="5"
+                ToolTip="{Binding Id}">
                 <StackPanel Margin="5">
 
                     <!--  标题  -->
@@ -136,31 +144,30 @@
                                 Height="30"
                                 Margin="5"
                                 pu:CheckBoxHelper.CheckedBackground="{DynamicResource PressedBackgroundBrush}"
+                                pu:CheckBoxHelper.CheckedContent="显示"
                                 pu:CheckBoxHelper.CornerRadius="5"
                                 pu:CheckBoxHelper.HoverBackground="{DynamicResource MouseOverBackgroundBrush}"
-                                Content="展示"
+                                Content="隐藏"
                                 Cursor="Hand"
                                 Foreground="{DynamicResource PrimaryForegroundBrush}"
                                 IsChecked="{Binding IsVisible}" />
 
                             <Button
-                                Width="55"
-                                Height="30"
                                 Margin="5"
                                 Command="{Binding DataContext.SaveCountdownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 CommandParameter="{Binding}"
-                                Content="保存"
-                                Style="{DynamicResource StandardButtonStyle}" />
+                                Content="&#xf0c7;"
+                                Style="{DynamicResource IconButtonStyle}" />
 
                             <Button
-                                Width="55"
-                                Height="30"
                                 Margin="5"
+                                pu:ButtonHelper.ClickForeground="{DynamicResource ValidationBrush}"
+                                pu:ButtonHelper.HoverForeground="{DynamicResource ValidationBrush}"
                                 Command="{Binding DataContext.RemoveCountdownCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 CommandParameter="{Binding}"
-                                Content="删除"
+                                Content="&#xf2ed;"
                                 Foreground="{DynamicResource ValidationBrush}"
-                                Style="{DynamicResource StandardButtonStyle}" />
+                                Style="{DynamicResource IconButtonStyle}" />
                         </StackPanel>
 
 

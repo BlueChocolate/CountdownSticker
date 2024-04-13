@@ -9,8 +9,8 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryForegroundBrush}" />
-        <!--<Setter Property="pu:ButtonHelper.HoverForeground" Value="{DynamicResource PrimaryForegroundBrush}" />-->
-        <!--<Setter Property="pu:ButtonHelper.ClickForeground" Value="{DynamicResource PrimaryForegroundBrush}" />-->
+        <Setter Property="pu:ButtonHelper.HoverForeground" Value="{DynamicResource PrimaryForegroundBrush}" />
+        <Setter Property="pu:ButtonHelper.ClickForeground" Value="{DynamicResource PrimaryForegroundBrush}" />
 
         <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundBrush}" />
         <Setter Property="pu:ButtonHelper.HoverBackground" Value="{DynamicResource MouseOverBackgroundBrush}" />
@@ -45,5 +45,6 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontFamily" Value="{StaticResource IconFontFamily}" />
     </Style>
 </ResourceDictionary>

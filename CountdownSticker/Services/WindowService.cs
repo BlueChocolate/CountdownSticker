@@ -9,9 +9,9 @@ namespace CountdownSticker.Services
 {
     public interface IWindowService
     {
-        public void Initialization();
         public void ShowMainWindow();
         public void HideMainWindow();
+        public void SetCountdowns(ICollection<Countdown> countdowns);
         public void AddCountdown(Countdown countdown);
         public void UpdateCountdown(Countdown countdown);
         public void UpdateCountdown(StickerViewModel stickerViewModel);
@@ -21,65 +21,64 @@ namespace CountdownSticker.Services
     public class WindowsService : IWindowService
     {
         private readonly ICountdownService _countdownService;
-        private readonly int leftPosition;
-        private MainWindowX? _mainWindow;
+        private MainWindowX _mainWindow;
         private Dictionary<Guid, StickerWindowX> _stickerWindows;
-        private readonly Timer _timer;
+        private bool _isLocked;
+        private readonly object _lock;
+        private readonly bool isMainWindowInitialized;
+
 
         public WindowsService()
         {
             _countdownService = App.Services.GetRequiredService<ICountdownService>();
-            leftPosition = (int)SystemParameters.PrimaryScreenWidth - 30 - 300;
             _stickerWindows = [];
-            _timer = new Timer(TimerElapsed, null, 0, 1000);
-        }
-
-        public void Initialization()
-        {
-            if (_mainWindow == null)
+            _isLocked = false;
+            _lock = new object();
+            _mainWindow = new MainWindowX();
+            _mainWindow.Closing += (sender, e) =>
             {
-                _mainWindow = new MainWindowX();
-                _mainWindow.DataContext = new MainViewModel();
-                _mainWindow.Closing += (sender, e) =>
-                {
-                    e.Cancel = true;
-                    ((MainWindowX)sender!).Visibility = Visibility.Hidden;
-                };
-            }
+                e.Cancel = true;
+                ((MainWindowX)sender!).Visibility = Visibility.Hidden;
+            };
+            isMainWindowInitialized = false;
+            _ = TimerElapsed();
         }
 
         public void ShowMainWindow()
         {
-            if (_mainWindow == null)
+            if (!isMainWindowInitialized)
             {
-                Initialization();
+                _mainWindow.DataContext = new MainViewModel();
             }
             _mainWindow!.Show();
         }
 
         public void HideMainWindow()
         {
-            if (_mainWindow == null)
-            {
-                Initialization();
-            }
             _mainWindow!.Hide();
+        }
 
+        public void SetCountdowns(ICollection<Countdown> countdowns)
+        {
+            foreach (var countdown in countdowns)
+            {
+                AddCountdown(countdown);
+            }
         }
 
         public void AddCountdown(Countdown countdown)
         {
             // Id 一定不会重复
-            _stickerWindows[countdown.Id] = new StickerWindowX()
+            var stickerWindows = _stickerWindows[countdown.Id] = new StickerWindowX()
             {
                 DataContext = new StickerViewModel(countdown.Id, countdown.Title, countdown.Note, countdown.EndTime, countdown.Remaining, countdown.IsActive, countdown.IsVisible),
                 WindowStartupLocation = WindowStartupLocation.Manual
             };
-            FixWindowPosition();
-            if (countdown.IsVisible)
+            stickerWindows.SizeChanged += (sender, e) =>
             {
-                _stickerWindows[countdown.Id].Show();
-            }
+                AlignAndShow();
+            };
+            AlignAndShow();
         }
 
         public void UpdateCountdown(Countdown countdown)
@@ -87,15 +86,7 @@ namespace CountdownSticker.Services
             if (_stickerWindows.TryGetValue(countdown.Id, out StickerWindowX? value))
             {
                 value.DataContext = new StickerViewModel(countdown.Id, countdown.Title, countdown.Note, countdown.EndTime, countdown.Remaining, countdown.IsActive, countdown.IsVisible);
-                FixWindowPosition();
-                if (countdown.IsVisible)
-                {
-                    value.Show();
-                }
-                else
-                {
-                    value.Hide();
-                }
+                AlignAndShow();
             }
         }
 
@@ -104,15 +95,7 @@ namespace CountdownSticker.Services
             if (_stickerWindows.TryGetValue(stickerViewModel.Id, out StickerWindowX? value))
             {
                 //value.DataContext = stickerViewModel; // 好像没必要
-                FixWindowPosition();
-                if (!value.IsVisible && stickerViewModel.IsVisible)
-                {
-                    value.Show();
-                }
-                else
-                {
-                    value.Hide();
-                }
+                AlignAndShow();
             }
         }
 
@@ -122,39 +105,71 @@ namespace CountdownSticker.Services
             {
                 value.Close();
                 _stickerWindows.Remove(id);
-                FixWindowPosition();
+                AlignAndShow();
             }
         }
 
-        public void FixWindowPosition()
+        public void AlignAndShow()
         {
-            int index = 0;
+            var screenWidth = (int)SystemParameters.PrimaryScreenWidth;
+            var screenHeight = (int)SystemParameters.PrimaryScreenHeight;
+            var horizontalSpacing = 30;
+            var verticalSpacing = 30;
+            int columns = 1;
+            int nextHeight = verticalSpacing;
+
+            Volatile.Write(ref _isLocked, true);
             _stickerWindows = _stickerWindows.OrderBy(x => ((StickerViewModel)x.Value.DataContext).EndTime).ToDictionary(x => x.Key, x => x.Value).ToDictionary();
             foreach (var stickerWindow in _stickerWindows.Values)
             {
                 if (((StickerViewModel)stickerWindow.DataContext).IsVisible)
                 {
-                    stickerWindow.Top = 30 + index++ * 165;
-                    stickerWindow.Left = leftPosition;
+                    if (!stickerWindow.IsVisible)
+                    {
+                        stickerWindow.Show();
+                    }
+                    if (nextHeight + (int)stickerWindow.ActualHeight > screenHeight)
+                    {
+                        columns++;
+                        nextHeight = verticalSpacing;
+                    }
+                    stickerWindow.Left = screenWidth - columns * (horizontalSpacing + (int)stickerWindow.ActualWidth);
+                    stickerWindow.Top = nextHeight;
+                    nextHeight += verticalSpacing + (int)stickerWindow.ActualHeight;
+                }
+                else
+                {
+                    stickerWindow.Hide();
                 }
             }
+            Volatile.Write(ref _isLocked, false);
         }
 
-        private void TimerElapsed(object? state)
+        private async Task TimerElapsed()
         {
-            foreach (var stickerWindow in _stickerWindows.Values)
+            while (true)
             {
-                if (!Application.Current.Dispatcher.CheckAccess())
+                if (!Volatile.Read(ref _isLocked))
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    foreach (var stickerWindow in _stickerWindows.Values)
                     {
-                        var dataContext = (StickerViewModel)stickerWindow.DataContext;
-                        if (dataContext.IsVisible)
+                        if (!Application.Current.Dispatcher.CheckAccess())
                         {
-                            dataContext.Remaining = dataContext.EndTime - DateTime.Now;
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                if (((StickerViewModel)stickerWindow.DataContext).IsVisible)
+                                {
+                                    var dataContext = (StickerViewModel)stickerWindow.DataContext;
+                                    if (dataContext.IsVisible)
+                                    {
+                                        dataContext.Remaining = dataContext.EndTime - DateTime.Now;
+                                    }
+                                }
+                            });
                         }
-                    });
+                    }
                 }
+                await Task.Delay(1);
             }
         }
     }

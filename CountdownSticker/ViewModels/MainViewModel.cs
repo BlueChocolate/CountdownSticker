@@ -30,10 +30,6 @@ namespace CountdownSticker.ViewModels
             _countdownService = App.Services.GetRequiredService<ICountdownService>();
             Countdowns = new ObservableCollection<Countdown>(_countdownService.GetCountdowns());
             Countdowns.CollectionChanged += CountdownsCollectionChanged;
-            foreach (var countdown in Countdowns)
-            {
-                _windowService.AddCountdown(countdown);
-            }
         }
 
         private void CountdownsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -68,13 +64,12 @@ namespace CountdownSticker.ViewModels
                     //Debug.WriteLine("NotifyCollectionChangedAction.Replace");
                     if (e.OldItems != null && e.NewItems != null)
                     {
-                        foreach (var item in e.NewItems)
+                        foreach (var item in e.NewItems.OfType<Countdown>())
                         {
-                            _countdownService.UpdateCountdown((Countdown)item);
-                            _windowService.UpdateCountdown(((Countdown)item));
+                            _countdownService.UpdateCountdown(item);
+                            _windowService.UpdateCountdown((item));
                         }
                     }
-                    
                     break;
             }
 

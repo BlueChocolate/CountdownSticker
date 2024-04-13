@@ -7,6 +7,7 @@ using System.Runtime;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace CountdownSticker.Services
 {
@@ -24,7 +25,7 @@ namespace CountdownSticker.Services
         private readonly string _settingsFilePath;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
         private readonly object _lock;
-        private Dictionary<string, object?> _settings;
+        private Dictionary<string, JsonElement> _settings;
 
         public SettingService()
         {
@@ -32,11 +33,27 @@ namespace CountdownSticker.Services
             _settingsFilePath = "settings.json";
             _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
             _lock = new object();
-            _settings = [];
 
             var settingsJson = _fileService.ReadFileText(_settingsFilePath) ?? "{}";
-            var settings = JsonSerializer.Deserialize<Dictionary<string, object?>>(settingsJson);
+            var settings = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(settingsJson);
             _settings = settings ?? [];
+
+            // 如果 Key 不存在，添加默认值
+            var defaultSettings = new Dictionary<string, object?>
+            {
+                { "CountdownStickersFilePath", "C:\\Users\\RadioNoise\\OneDrive\\便笺\\CountdownStickers.json" },
+                { "Theme", "Dark" }
+            };
+            foreach (var defaultSetting in defaultSettings)
+            {
+                if (!_settings.ContainsKey(defaultSetting.Key))
+                {
+                    string jsonText = JsonSerializer.Serialize(defaultSetting.Value);
+                    var jsonElement = JsonDocument.Parse(jsonText).RootElement;
+                    _settings[defaultSetting.Key] = jsonElement;
+                }
+            }
+            SaveSettingsToFile();
         }
 
         public T? GetSetting<T>(string key)
