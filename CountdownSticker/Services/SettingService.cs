@@ -1,8 +1,11 @@
 ﻿using CountdownSticker.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32;
+using Panuon.WPF.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime;
 using System.Text;
 using System.Text.Json;
@@ -13,6 +16,7 @@ namespace CountdownSticker.Services
 {
     public interface ISettingService
     {
+        public event EventHandler<SettingChangedEventArgs> SettingChanged;
         public T? GetSetting<T>(string key);
         public void SetSetting(string key, object value);
         public Task<T> GetSettingAsync<T>(string key);
@@ -26,6 +30,8 @@ namespace CountdownSticker.Services
         private readonly JsonSerializerOptions _jsonSerializerOptions;
         private readonly object _lock;
         private Dictionary<string, JsonElement> _settings;
+
+        public event EventHandler<SettingChangedEventArgs> SettingChanged;
 
         public SettingService()
         {
@@ -42,7 +48,13 @@ namespace CountdownSticker.Services
             var defaultSettings = new Dictionary<string, object?>
             {
                 { "CountdownStickersFilePath", "C:\\Users\\RadioNoise\\OneDrive\\便笺\\CountdownStickers.json" },
-                { "Theme", "Dark" }
+                { "Theme", "Dark" },
+                { "Language", "zh-CN" },
+                { "Topmost", true },
+                { "AutoStart", false },
+                { "HorizontalSpacing" ,30 },
+                { "VerticalSpacing", 30 },
+                { "HideMainWindowAtStartup", true}
             };
             foreach (var defaultSetting in defaultSettings)
             {
@@ -53,7 +65,7 @@ namespace CountdownSticker.Services
                     _settings[defaultSetting.Key] = jsonElement;
                 }
             }
-            SaveSettingsToFile();
+            SaveToFile();
         }
 
         public T? GetSetting<T>(string key)
@@ -68,15 +80,23 @@ namespace CountdownSticker.Services
 
         public void SetSetting(string key, object value)
         {
+            var oldValue = GetSetting<object>(key);
             string json = JsonSerializer.Serialize(value);
             _settings[key] = JsonDocument.Parse(json).RootElement;
-            SaveSettingsToFile();
+            SaveToFile();
+            OnSettingChanged(new SettingChangedEventArgs(key, oldValue, value));
         }
 
-        private void SaveSettingsToFile()
+        private void SaveToFile()
         {
+            // 保存设置
             var settingText = JsonSerializer.Serialize(_settings, _jsonSerializerOptions);
             _fileService.WriteTextToFile(_settingsFilePath, settingText);
+        }
+
+        protected virtual void OnSettingChanged(SettingChangedEventArgs e)
+        {
+            SettingChanged?.Invoke(this, e);
         }
 
         Task<T> ISettingService.GetSettingAsync<T>(string key)
@@ -87,6 +107,20 @@ namespace CountdownSticker.Services
         Task ISettingService.SetSettingAsync(string key, object value)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class SettingChangedEventArgs : EventArgs
+    {
+        public string SettingName { get; }
+        public object? OldValue { get; }
+        public object NewValue { get; }
+
+        public SettingChangedEventArgs(string settingName, object? oldValue, object newValue)
+        {
+            SettingName = settingName;
+            OldValue = oldValue;
+            NewValue = newValue;
         }
     }
 }

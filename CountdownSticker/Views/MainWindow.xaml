@@ -13,15 +13,13 @@
     Height="500"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     pu:WindowXCaption.BorderBrush="#3E3E3E"
-    pu:WindowXCaption.BorderThickness="0,0,0,1"
-    pu:WindowXCaption.Buttons="Close"
+    pu:WindowXCaption.BorderThickness="0"
+    pu:WindowXCaption.Buttons="None"
     pu:WindowXCaption.HeaderAlignment="Left"
     Background="{DynamicResource PrimarySolidBackgroundBrush}"
     Foreground="{DynamicResource PrimaryForegroundBrush}"
+    SnapsToDevicePixels="True"
     mc:Ignorable="d">
-    <pu:WindowX.Effect>
-        <pu:AcrylicWindowXEffect AccentColor="#E11E1E1E" />
-    </pu:WindowX.Effect>
     <pu:WindowXCaption.HeaderTemplate>
         <DataTemplate>
             <TextBlock
@@ -39,9 +37,24 @@
                 Width="40"
                 Height="35"
                 VerticalAlignment="Top"
+                pu:ButtonHelper.ClickCornerRadius="0"
+                pu:ButtonHelper.CornerRadius="0"
                 pu:ButtonHelper.HoverCornerRadius="0"
-                Content="&#xe98f;"
-                FontFamily="{StaticResource PanuonIconFont}"
+                Content="&#xf013;"
+                FontSize="18"
+                Foreground="{DynamicResource IconBrush}"
+                Style="{DynamicResource IconButtonStyle}" />
+            <Button
+                Width="40"
+                Height="35"
+                VerticalAlignment="Top"
+                pu:ButtonHelper.ClickBackground="#961717"
+                pu:ButtonHelper.ClickCornerRadius="0"
+                pu:ButtonHelper.CornerRadius="0"
+                pu:ButtonHelper.HoverBackground="#E61123"
+                pu:ButtonHelper.HoverCornerRadius="0"
+                Command="{Binding CloseMainWindowCommand}"
+                Content="&#x58;"
                 FontSize="18"
                 Foreground="{DynamicResource IconBrush}"
                 Style="{DynamicResource IconButtonStyle}" />
@@ -73,37 +86,22 @@
                 <StackPanel Margin="5">
 
                     <!--  标题  -->
-                    <DockPanel>
-                        <!--<Label
-                            Margin="5,0,5,0"
-                            VerticalAlignment="Center"
-                            Content="标题"
-                            DockPanel.Dock="Left"
-                            Style="{DynamicResource SmallLabelStyle}" />-->
-                        <TextBox
-                            Margin="5"
-                            VerticalAlignment="Center"
-                            pu:TextBoxHelper.Watermark="请输入标题..."
-                            DockPanel.Dock="Right"
-                            Style="{DynamicResource UnderlineTextBoxStyle}"
-                            Text="{Binding Title}" />
-                    </DockPanel>
+                    <TextBox
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        pu:TextBoxHelper.Watermark="请输入标题..."
+                        DockPanel.Dock="Right"
+                        Style="{DynamicResource UnderlineTextBoxStyle}"
+                        Text="{Binding Title}" />
 
                     <!--  备注  -->
-                    <!--<DockPanel>
-                        <Label
-                            Margin="5,0,5,0"
-                            VerticalAlignment="Center"
-                            Content="备注"
-                            Style="{DynamicResource SmallLabelStyle}" />
-                        <TextBox
-                            Margin="5"
-                            pu:TextBoxHelper.Watermark="请输入备注..."
-                            AcceptsReturn="True"
-                            Style="{DynamicResource UnderlineTextBoxStyle}"
-                            Text="{Binding Note}"
-                            TextWrapping="Wrap" />
-                    </DockPanel>-->
+                    <TextBox
+                        Margin="5"
+                        pu:TextBoxHelper.Watermark="请输入备注..."
+                        AcceptsReturn="True"
+                        Style="{DynamicResource UnderlineTextBoxStyle}"
+                        Text="{Binding Note}"
+                        TextWrapping="Wrap" />
 
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -112,11 +110,6 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <!--<Label
-                                Margin="5,0,5,0"
-                                VerticalAlignment="Center"
-                                Content="日期"
-                                Style="{DynamicResource SmallLabelStyle}" />-->
                             <pu:DateTimePicker
                                 Height="30"
                                 Margin="5"
@@ -192,6 +185,8 @@
         <ScrollViewer
             Grid.Row="1"
             pu:ScrollBarHelper.ThumbCornerRadius="5"
+            BorderBrush="#3E3E3E"
+            BorderThickness="0,1,0,0"
             VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <Border

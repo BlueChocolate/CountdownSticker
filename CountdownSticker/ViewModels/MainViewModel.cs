@@ -76,6 +76,12 @@ namespace CountdownSticker.ViewModels
         }
 
         [RelayCommand]
+        public void CloseMainWindow()
+        {
+            _windowService.HideMainWindow();
+        }
+
+        [RelayCommand]
         public void AddCountdown()
         {
             Countdowns.Add(new Countdown());
@@ -92,22 +98,15 @@ namespace CountdownSticker.ViewModels
         [RelayCommand]
         public void SaveCountdown(Countdown countdown)
         {
-            var oldCountdown = Countdowns.FirstOrDefault(c => c.Id == countdown.Id);
-            if (oldCountdown != null)
+            for (int i = 0; i < Countdowns.Count; i++)
             {
-                countdown.LastModified = DateTime.Now;
-                Countdowns.Remove(oldCountdown);
-                Countdowns.Add(countdown);
+                if (Countdowns[i].Id == countdown.Id)
+                {
+                    Countdowns[i] = countdown;
+                    break;
+                }
             }
 
-            //for (int i = 0; i < Countdowns.Count; i++)
-            //{
-            //    if (Countdowns[i].Id == countdown.Id)
-            //    {
-            //        Countdowns[i] = countdown;
-            //        break;
-            //    }
-            //}
             //Countdowns = new ObservableCollection<Countdown>(Countdowns.OrderBy(c => c.LastModified).ToList());
             //Countdowns.CollectionChanged += CountdownsCollectionChanged;
         }

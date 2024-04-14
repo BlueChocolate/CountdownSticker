@@ -37,11 +37,29 @@ namespace CountdownSticker
             Services = serviceCollection.BuildServiceProvider();
 
             var windowService = Services.GetRequiredService<IWindowService>();
+            var settingService = Services.GetRequiredService<ISettingService>();
             var countdownService = Services.GetRequiredService<ICountdownService>();
             windowService.SetCountdowns(countdownService.GetCountdowns());
-            //windowService.ShowMainWindow();
 
-            GlobalSettings.ChangeTheme("Dark");
+            if (settingService.GetSetting<bool>("HideMainWindowAtStartup") is true)
+            {
+                windowService.ShowMainWindow();
+            }
+            if (settingService.GetSetting<string>("Theme") is var theme)
+            {
+                GlobalSettings.ChangeTheme(theme);
+            }
+
+            settingService.SettingChanged += (sender, e) =>
+            {
+                if (e.SettingName is "Theme")
+                {
+                    if (e.NewValue is string theme)
+                    {
+                        GlobalSettings.ChangeTheme(theme);
+                    }
+                }
+            };
         }
     }
 }

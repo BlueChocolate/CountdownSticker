@@ -17,7 +17,7 @@
                 <pu:StyleDictionary Includes="All" />
 
                 <!--  自定义控件样式  -->
-                <ResourceDictionary Source="/CountdownSticker;component/Styles/LabelStyle.xaml" />
+                <ResourceDictionary Source="/CountdownSticker;component/Styles/TextBlockStyle.xaml" />
                 <ResourceDictionary Source="/CountdownSticker;component/Styles/ButtonStyle.xaml" />
                 <ResourceDictionary Source="/CountdownSticker;component/Styles/ContextMenuStyle.xaml" />
                 <ResourceDictionary Source="/CountdownSticker;component/Styles/WindowXStyle.xaml" />

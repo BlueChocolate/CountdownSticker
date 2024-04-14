@@ -16,11 +16,13 @@ namespace CountdownSticker.Services
         public void UpdateCountdown(Countdown countdown);
         public void UpdateCountdown(StickerViewModel stickerViewModel);
         public void RemoveCountdown(Guid id);
+        public void AlignAndRefresh();
     }
 
     public class WindowsService : IWindowService
     {
         private readonly ICountdownService _countdownService;
+        private readonly ISettingService _settingService;
         private MainWindowX _mainWindow;
         private Dictionary<Guid, StickerWindowX> _stickerWindows;
         private bool _isLocked;
@@ -31,6 +33,7 @@ namespace CountdownSticker.Services
         public WindowsService()
         {
             _countdownService = App.Services.GetRequiredService<ICountdownService>();
+            _settingService = App.Services.GetRequiredService<ISettingService>();
             _stickerWindows = [];
             _isLocked = false;
             _lock = new object();
@@ -121,8 +124,8 @@ namespace CountdownSticker.Services
         {
             var screenWidth = (int)SystemParameters.PrimaryScreenWidth;
             var screenHeight = (int)SystemParameters.PrimaryScreenHeight;
-            var horizontalSpacing = 30;
-            var verticalSpacing = 30;
+            var horizontalSpacing = _settingService.GetSetting<int>("HorizontalSpacing");
+            var verticalSpacing = _settingService.GetSetting<int>("VerticalSpacing");
             int columns = 1;
             int nextHeight = verticalSpacing;
 

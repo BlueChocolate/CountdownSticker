@@ -46,7 +46,10 @@
                 BorderThickness="1"
                 IsEnabled="False" />
             <MenuItem Header="窗口置顶" Icon="&#xf30c;" />
-            <MenuItem Header="对齐便笺" Icon="&#xf5cb;" />
+            <MenuItem
+                Command="{Binding AlignWindowsCommand}"
+                Header="对齐便笺"
+                Icon="&#xf5cb;" />
             <MenuItem
                 Command="{Binding ExitCommand}"
                 Header="退出程序"
@@ -57,6 +60,9 @@
         Margin="15"
         pu:WindowX.IsDragMoveArea="True"
         Background="Transparent">
+        <Grid.InputBindings>
+            <MouseBinding Command="{Binding ShowMainWindowCommand}" MouseAction="LeftDoubleClick" />
+        </Grid.InputBindings>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -69,42 +75,42 @@
             TextWrapping="Wrap" />
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Label
-                VerticalContentAlignment="Bottom"
-                Content="{Binding Remaining.Days}"
+            <TextBlock
+                VerticalAlignment="Bottom"
                 FontSize="50"
                 Foreground="{DynamicResource AccentBrush}"
-                Style="{DynamicResource LargeLabelStyle}" />
-            <Label
+                Style="{DynamicResource LargeTextBlockStyle}"
+                Text="{Binding Remaining.Days}" />
+            <TextBlock
                 Margin="5,0,5,10"
-                VerticalContentAlignment="Bottom"
-                Content="天"
+                VerticalAlignment="Bottom"
                 Foreground="{DynamicResource TertiaryForegroundBrush}"
-                Style="{DynamicResource MediumLabelStyle}" />
-            <Label
-                VerticalContentAlignment="Bottom"
-                Content="{Binding Remaining.Hours}"
+                Style="{DynamicResource MediumTextBlockStyle}"
+                Text="天" />
+            <TextBlock
+                VerticalAlignment="Bottom"
                 FontSize="50"
                 Foreground="{DynamicResource AccentBrush}"
-                Style="{DynamicResource LargeLabelStyle}" />
-            <Label
+                Style="{DynamicResource LargeTextBlockStyle}"
+                Text="{Binding Remaining.Hours}" />
+            <TextBlock
                 Margin="5,0,5,10"
-                VerticalContentAlignment="Bottom"
-                Content="时"
+                VerticalAlignment="Bottom"
                 Foreground="{DynamicResource TertiaryForegroundBrush}"
-                Style="{DynamicResource MediumLabelStyle}" />
-            <Label
-                VerticalContentAlignment="Bottom"
-                Content="{Binding Remaining.Minutes}"
+                Style="{DynamicResource MediumTextBlockStyle}"
+                Text="时" />
+            <TextBlock
+                VerticalAlignment="Bottom"
                 FontSize="50"
                 Foreground="{DynamicResource AccentBrush}"
-                Style="{DynamicResource LargeLabelStyle}" />
-            <Label
+                Style="{DynamicResource LargeTextBlockStyle}"
+                Text="{Binding Remaining.Minutes}" />
+            <TextBlock
                 Margin="5,0,5,10"
-                VerticalContentAlignment="Bottom"
-                Content="分"
+                VerticalAlignment="Bottom"
                 Foreground="{DynamicResource TertiaryForegroundBrush}"
-                Style="{DynamicResource MediumLabelStyle}" />
+                Style="{DynamicResource MediumTextBlockStyle}"
+                Text="分" />
         </StackPanel>
 
 

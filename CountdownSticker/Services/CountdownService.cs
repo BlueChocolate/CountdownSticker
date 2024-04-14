@@ -28,7 +28,7 @@ namespace CountdownSticker.Services
             _settingService = App.Services.GetRequiredService<ISettingService>();
             _fileService = App.Services.GetRequiredService<IFileService>();
             _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
-            _countdowns = ReadCountdownsFromFile();
+            _countdowns = ReadCountdownsFromFile().OrderBy(c => c.LastModified).ToList();
         }
 
         public ICollection<Countdown> GetCountdowns()

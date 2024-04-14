@@ -48,6 +48,14 @@ namespace CountdownSticker.ViewModels
         }
 
         [RelayCommand]
+        void AlignWindows()
+        {
+            _windowService.AlignAndRefresh();
+        }
+
+
+
+        [RelayCommand]
         public void ShowMainWindow()
         {
             _windowService.ShowMainWindow();
